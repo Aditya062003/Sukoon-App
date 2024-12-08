@@ -1,0 +1,41 @@
+// Root-level build.gradle file
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Ensure you're using the appropriate Android Gradle Plugin version
+        classpath 'com.android.tools.build:gradle:7.4.1'  // Match this with your Android Studio version
+        classpath 'com.google.gms:google-services:4.3.10'  // For Firebase/Google services if needed
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        // Add additional repositories if needed, e.g., for JitPack or custom sources
+        // maven { url 'https://jitpack.io' }
+    }
+}
+
+// Define the root project build directory
+rootProject.buildDir = "../build"
+
+// Configure subprojects to have their own build directories under the root build directory
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    // Ensure evaluation depends on the app module (if required)
+    project.evaluationDependsOn(":app")
+}
+
+// Task for cleaning up the build artifacts
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+// Optional: Include a custom plugin or setup for Flutter if needed
+// For example, Flutter plugin setup in case of Flutter-based project
+// classpath 'io.flutter:flutter_embedding:latest_version'
